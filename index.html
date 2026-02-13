@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>For My Love Libiksha 💖</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+  margin:0;
+  font-family:Poppins,sans-serif;
+  background:linear-gradient(135deg,#ff758c,#ff7eb3);
+  color:white;
+  text-align:center;
+  overflow-x:hidden;
+}
+
+section{
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:20px;
+}
+
+h1{
+  font-family:'Great Vibes',cursive;
+  font-size:60px;
+}
+
+button{
+  padding:12px 25px;
+  border:none;
+  border-radius:25px;
+  font-size:17px;
+  cursor:pointer;
+  margin:10px;
+  background:white;
+  color:#ff4f7a;
+  font-weight:bold;
+}
+
+button:hover{
+  background:#ff4f7a;
+  color:white;
+}
+
+.hidden{
+  display:none;
+}
+
+/* Slideshow */
+.slideshow{
+  max-width:300px;
+  height:350px;
+  margin:auto;
+  border-radius:15px;
+  overflow:hidden;
+}
+
+.slideshow img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:none;
+}
+
+/* Hearts */
+.heart{
+  position:fixed;
+  top:-10px;
+  font-size:22px;
+  animation:fall linear infinite;
+}
+
+@keyframes fall{
+  to{transform:translateY(110vh);}
+}
+
+.counter{
+  background:rgba(255,255,255,0.2);
+  padding:15px 25px;
+  border-radius:15px;
+  margin:20px 0;
+  font-size:18px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Music -->
+<audio id="music" loop>
+  <source src="music.mp3" type="audio/mpeg">
+</audio>
+
+<!-- PAGE 1 -->
+<section id="page1">
+
+<h1>Libiksha 💖</h1>
+
+<h2>Do You Love Me? 😘</h2>
+
+<div>
+<button onclick="yesClicked()">Yes ❤️</button>
+<button id="noBtn" onmouseover="moveNo()">No 💔</button>
+</div>
+
+<button onclick="playMusic()">Play Our Song 🎵</button>
+
+</section>
+
+<!-- PAGE 2 -->
+<section id="page2" class="hidden">
+
+<h1>Our Love Timer ⏳💞</h1>
+
+<div class="counter" id="counter">
+Loading...
+</div>
+
+<h2>My Secret Message 💌</h2>
+
+<p>
+Libiksha, you are my world 🌍  
+My happiness 😊  
+My forever ♾️  
+I Love You Bubu Always 💖
+</p>
+
+<button onclick="goProposal()">Next ➡️</button>
+
+</section>
+
+<!-- PAGE 3 -->
+<section id="page3" class="hidden">
+
+<h1>Will You Be Mine Forever? 💍</h1>
+
+<h2>Will You Marry Me? 😍</h2>
+
+<button onclick="accept()">Yes 💖</button>
+
+</section>
+
+<!-- PAGE 4 -->
+<section id="page4" class="hidden">
+
+<h1>Our Memories 📸</h1>
+
+<div class="slideshow">
+
+<img src="img1.jpg" class="slide">
+<img src="img2.jpg" class="slide">
+<img src="img3.jpg" class="slide">
+
+</div>
+
+<h2>Forever Yours ❤️</h2>
+
+<p>— Kumaran</p>
+
+</section>
+
+<script>
+
+/* Anniversary Date: Feb 14, 2025 */
+const anniversaryDate = new Date("2025-02-14");
+
+/* Music */
+function playMusic(){
+ document.getElementById("music").play();
+}
+
+/* Pages */
+function yesClicked(){
+ showPage(2);
+ startCounter();
+}
+
+function goProposal(){
+ showPage(3);
+}
+
+function accept(){
+ showPage(4);
+ startSlideshow();
+}
+
+/* Show Pages */
+function showPage(num){
+ for(let i=1;i<=4;i++){
+  document.getElementById("page"+i).classList.add("hidden");
+ }
+ document.getElementById("page"+num).classList.remove("hidden");
+}
+
+/* No Button Move */
+function moveNo(){
+ const btn=document.getElementById("noBtn");
+
+ const x=Math.random()*(window.innerWidth-100);
+ const y=Math.random()*(window.innerHeight-100);
+
+ btn.style.position="absolute";
+ btn.style.left=x+"px";
+ btn.style.top=y+"px";
+}
+
+/* Slideshow */
+let slideIndex=0;
+
+function startSlideshow(){
+ const slides=document.querySelectorAll(".slide");
+
+ setInterval(()=>{
+  slides.forEach(s=>s.style.display="none");
+
+  slides[slideIndex].style.display="block";
+
+  slideIndex++;
+
+  if(slideIndex>=slides.length){
+   slideIndex=0;
+  }
+
+ },2000);
+}
+
+/* Anniversary Counter */
+function startCounter(){
+
+ setInterval(()=>{
+
+  const now = new Date();
+  const diff = now - anniversaryDate;
+
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff / (1000*60*60)) % 24);
+  const mins = Math.floor((diff / (1000*60)) % 60);
+  const secs = Math.floor((diff / 1000) % 60);
+
+  document.getElementById("counter").innerHTML =
+   "We Have Been Together For 💖<br>" +
+   days + " Days " +
+   hours + " Hours " +
+   mins + " Minutes " +
+   secs + " Seconds";
+
+ },1000);
+}
+
+/* Hearts */
+function createHeart(){
+ const heart=document.createElement("div");
+ heart.classList.add("heart");
+ heart.innerHTML="❤️";
+
+ heart.style.left=Math.random()*100+"vw";
+ heart.style.animationDuration=(Math.random()*3+2)+"s";
+
+ document.body.appendChild(heart);
+
+ setTimeout(()=>heart.remove(),5000);
+}
+
+setInterval(createHeart,300);
+
+</script>
+
+</body>
+</html>
